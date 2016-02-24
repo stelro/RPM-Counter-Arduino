@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QSlider>
 #include <QtWidgets>
+#include "qcgaugewidget.h"
 
 namespace Ui {
 class ArduinoRpm;
@@ -25,13 +26,9 @@ public:
     void SerialInitializer();
 public slots:
     void serialReciver();
-    void serialTransmiter();
 private slots:
     void on_actionExit_triggered();
-
     void on_actionSettings_triggered();
-
-    void on_lightButton_clicked();
 
 private:
     Ui::ArduinoRpm *ui;
@@ -40,6 +37,10 @@ private:
     QVBoxLayout *main_layout;
     QSlider *slider;
     QLCDNumber *lcd;
+
+    QcGaugeWidget *rpmGuage;
+    QcNeedleItem *rpmNeedle;
+
 
 };
 

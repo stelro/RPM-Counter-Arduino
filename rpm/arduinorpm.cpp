@@ -11,11 +11,40 @@ ArduinoRpm::ArduinoRpm(QWidget *parent) :
 
     SerialInitializer();
 
+    rpmGuage = new QcGaugeWidget;
+    rpmGuage->addBackground(99);
+    QcBackgroundItem *bkg1 = rpmGuage->addBackground(92);
+    bkg1->clearrColors();
+    bkg1->addColor(0.1,Qt::black);
+    bkg1->addColor(1.0,Qt::white);
+
+    QcBackgroundItem *bkg2 = rpmGuage->addBackground(88);
+    bkg2->clearrColors();
+    bkg2->addColor(0.1,Qt::gray);
+    bkg2->addColor(1.0,Qt::darkGray);
+
+    //the dots values , not the numbers
+    rpmGuage->addArc(55);
+    rpmGuage->addDegrees(65)->setValueRange(0,100);
+    rpmGuage->addColorBand(50);
+
+    rpmGuage->addValues(80)->setValueRange(0,100);
+
+    rpmGuage->addLabel(70)->setText("RPM");
+    QcLabelItem *lab = rpmGuage->addLabel(40);
+    lab->setText("0");
+    //Needle height
+    rpmNeedle = rpmGuage->addNeedle(60);
+    rpmNeedle->setLabel(lab);
+    rpmNeedle->setColor(Qt::white);
+    rpmNeedle->setValueRange(0,100);
+    rpmGuage->addBackground(7);
+    rpmGuage->addGlass(88);
+    ui->verticalLayout->addWidget(rpmGuage);
+
 
     connect(serial,SIGNAL(readyRead()), this, SLOT(serialReciver()));
     connect(ui->pushButton,SIGNAL(clicked(bool)), this,SLOT(close()));
-
-
 
 
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
@@ -36,7 +65,8 @@ void ArduinoRpm::serialReciver()
     QString input = QString(byteArray);
 
     ui->lcdNumber->display(input);
-    ui->dial->setValue(input.toInt());
+    rpmNeedle->setCurrentValue(input.toInt() / 10);
+
 }
 
 void ArduinoRpm::SerialInitializer()
@@ -63,16 +93,5 @@ void ArduinoRpm::on_actionSettings_triggered()
     settingsDialog.exec();
 }
 
-void ArduinoRpm::serialTransmiter()
-{
 
-    QByteArray dayArray;
-    dayArray[0]=2;
-    this->serial->write(dayArray);
 
-}
-
-void ArduinoRpm::on_lightButton_clicked()
-{
-    serialTransmiter();
-}

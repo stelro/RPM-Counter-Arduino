@@ -14,28 +14,26 @@ void setup() {
 
 void loop() {
   
-  byte signal;
-  if(Serial.available()) {
-    Serial.println(signal);
-    if (signal > 1) {
-       digitalWrite(led3,HIGH);
-    }
-  }
-  
   int sensorvalue = analogRead(A0);
-  //Serial.println(sensorvalue);
+  Serial.println(sensorvalue);
   
   
-  if (sensorvalue >= 0 && sensorvalue < 600) {
+  if (sensorvalue >= 0 && sensorvalue < 200) {
     digitalWrite(led1,HIGH);
     digitalWrite(led2,LOW);
     digitalWrite(led3,LOW);
     digitalWrite(led4,LOW);
   }
- else if (sensorvalue >= 600 && sensorvalue < 800) {
+ else if (sensorvalue >= 200 && sensorvalue < 400) {
     digitalWrite(led1,LOW);
     digitalWrite(led2,HIGH);
     digitalWrite(led3,LOW);
+    digitalWrite(led4,LOW);
+  } 
+  else if (sensorvalue >= 400 && sensorvalue < 800) {
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,LOW);
+    digitalWrite(led3,HIGH);
     digitalWrite(led4,LOW);
   }
   else {

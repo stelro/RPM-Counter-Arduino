@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 QT += serialport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,10 +16,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         arduinorpm.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    qcgaugewidget.cpp
 
 HEADERS  += arduinorpm.h \
-    settingsdialog.h
+    settingsdialog.h \
+    qcgaugewidget.h
 
 FORMS    += arduinorpm.ui \
     settingsdialog.ui
+
