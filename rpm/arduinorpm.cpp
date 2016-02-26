@@ -2,15 +2,14 @@
 #include "ui_arduinorpm.h"
 #include "settingsdialog.h"
 
-ArduinoRpm::ArduinoRpm(QWidget *parent) :
+ArduinoRpm::ArduinoRpm(QWidget *parent,QString passed_serial) :
     QMainWindow(parent),
-    ui(new Ui::ArduinoRpm)
+    ui(new Ui::ArduinoRpm), serialPortValue(passed_serial)
 {
-
-    ui->setupUi(this);
-
     SerialInitializer();
 
+
+    ui->setupUi(this);
     rpmGuage = new QcGaugeWidget;
     rpmGuage->addBackground(99);
     QcBackgroundItem *bkg1 = rpmGuage->addBackground(92);
@@ -20,24 +19,24 @@ ArduinoRpm::ArduinoRpm(QWidget *parent) :
 
     QcBackgroundItem *bkg2 = rpmGuage->addBackground(88);
     bkg2->clearrColors();
-    bkg2->addColor(0.1,Qt::gray);
+    bkg2->addColor(0.1,Qt::black);
     bkg2->addColor(1.0,Qt::darkGray);
 
     //the dots values , not the numbers
     rpmGuage->addArc(55);
-    rpmGuage->addDegrees(65)->setValueRange(0,100);
+    rpmGuage->addDegrees(65)->setValueRange(0,10);
     rpmGuage->addColorBand(50);
 
-    rpmGuage->addValues(80)->setValueRange(0,100);
+    rpmGuage->addValues(80)->setValueRange(0,10);
 
-    rpmGuage->addLabel(70)->setText("RPM");
+    rpmGuage->addLabel(70)->setText("x1000RPM");
     QcLabelItem *lab = rpmGuage->addLabel(40);
     lab->setText("0");
     //Needle height
     rpmNeedle = rpmGuage->addNeedle(60);
     rpmNeedle->setLabel(lab);
     rpmNeedle->setColor(Qt::white);
-    rpmNeedle->setValueRange(0,100);
+    rpmNeedle->setValueRange(0,10000);
     rpmGuage->addBackground(7);
     rpmGuage->addGlass(88);
     ui->verticalLayout->addWidget(rpmGuage);
@@ -46,15 +45,10 @@ ArduinoRpm::ArduinoRpm(QWidget *parent) :
     connect(serial,SIGNAL(readyRead()), this, SLOT(serialReciver()));
     connect(ui->pushButton,SIGNAL(clicked(bool)), this,SLOT(close()));
 
-
-
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
-
-    ui->label_2->setText(baudRateValue);
-
-    connect(ui->horizontalSlider,SIGNAL(valueChanged(int)),
-            ui->lcdNumber,SLOT(display(int)));
-
+    //Status bar
+    statusMessage = "Connected on " + serialPortValue + " Port!";
+    ui->statusBar->showMessage(statusMessage);
 
 
 }
@@ -63,6 +57,7 @@ ArduinoRpm::~ArduinoRpm()
 {
     delete ui;
     serial->close();
+
 }
 
 void ArduinoRpm::serialReciver()
@@ -72,13 +67,13 @@ void ArduinoRpm::serialReciver()
     QString input = QString(byteArray);
 
     ui->lcdNumber->display(input);
-    rpmNeedle->setCurrentValue(input.toInt() / 10);
+    rpmNeedle->setCurrentValue(input.toInt()*10);
 }
 
 void ArduinoRpm::SerialInitializer()
 {
     serial = new QSerialPort(this);
-    serial->setPortName("/dev/ttyACM0"); //COM-port your Arduino is connected to
+    serial->setPortName(serialPortValue); //COM-port your Arduino is connected to
     serial->open(QIODevice::ReadWrite);
     serial->setBaudRate(QSerialPort::Baud9600); //must be the same as your arduino-baudrate
     serial->setDataBits(QSerialPort::Data8);
@@ -98,13 +93,5 @@ void ArduinoRpm::on_actionSettings_triggered()
     settingsDialog.setModal(true);
     settingsDialog.exec();
 }
-
-void ArduinoRpm::getBaudRate(const QString& baudRate)
-{
-    emit valueChanged(baudRate);
-    baudRateValue = baudRate;
-}
-
-
 
 

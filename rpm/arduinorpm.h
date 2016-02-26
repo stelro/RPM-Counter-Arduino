@@ -20,19 +20,14 @@ class ArduinoRpm : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ArduinoRpm(QWidget *parent = 0);
+    explicit ArduinoRpm(QWidget *parent = 0,QString passed_serial = "/dev/ttyUSB0");
     ~ArduinoRpm();
-
-    void SerialInitializer();
 public slots:
     void serialReciver();
-    void getBaudRate(const QString&);
-signals:
-    void valueChanged(const QString &newValue);
+    void SerialInitializer();
 private slots:
     void on_actionExit_triggered();
     void on_actionSettings_triggered();
-
 private:
     Ui::ArduinoRpm *ui;
     QSerialPort *serial;
@@ -44,14 +39,11 @@ private:
     QcGaugeWidget *rpmGuage;
     QcNeedleItem *rpmNeedle;
 
-    //variables to hold settings values
+    //variable to hold settings values
     QString serialPortValue;
-    QString baudRateValue;
-    QString dataBitsValue;
-    QString parityValue;
-    QString stopBitsValue;
-    QString flowControllValue;
 
+    //status bar message
+    QString statusMessage;
 
 };
 

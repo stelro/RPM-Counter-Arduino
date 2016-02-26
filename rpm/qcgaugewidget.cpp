@@ -394,7 +394,7 @@ QcLabelItem::QcLabelItem(QObject *parent) :
     setPosition(50);
     mAngle = 270;
     mText = "%";
-    mColor = Qt::black;
+    mColor = Qt::white;
 }
 
 void QcLabelItem::draw(QPainter *painter)
@@ -402,7 +402,7 @@ void QcLabelItem::draw(QPainter *painter)
     resetRect();
     QRectF tmpRect = adjustRect(position());
     float r = getRadius(rect());
-    QFont font("Meiryo UI", r/10.0, QFont::Bold);
+    QFont font("Meiryo UI", r/10.0, QFont::Helvetica);
     painter->setFont(font);
     painter->setPen(QPen(mColor));
 
@@ -458,7 +458,7 @@ QcArcItem::QcArcItem(QObject *parent) :
     QcScaleItem(parent)
 {
     setPosition(80);
-    mColor = Qt::black;
+    mColor = Qt::white;
 }
 
 void QcArcItem::draw(QPainter *painter)
@@ -490,11 +490,7 @@ QcColorBand::QcColorBand(QObject *parent) :
     QPair<QColor,float> pair;
 
     pair.first = Qt::green;
-    pair.second = 10;
-    mBandColors.append(pair);
-
-    pair.first = Qt::darkGreen;
-    pair.second = 50;
+    pair.second = 80;
     mBandColors.append(pair);
 
     pair.first = Qt::red;
@@ -549,8 +545,8 @@ void QcColorBand::setColors(const QList<QPair<QColor, float> > &colors)
 QcDegreesItem::QcDegreesItem(QObject *parent) :
     QcScaleItem(parent)
 {
-    mStep = 10;
-    mColor = Qt::black;
+    mStep = 1;
+    mColor = Qt::white;
     mSubDegree = false;
     setPosition(90);
 }
@@ -780,8 +776,8 @@ QcValuesItem::QcValuesItem(QObject *parent) :
     QcScaleItem(parent)
 {
     setPosition(70);
-    mColor = Qt::black;
-    mStep = 10;
+    mColor = Qt::white;
+    mStep = 1;
 }
 
 
@@ -789,7 +785,7 @@ void QcValuesItem::draw(QPainter*painter)
 {
     QRectF  tmpRect = resetRect();
     float r = getRadius(adjustRect(99));
-    QFont font("Meiryo UI",0, QFont::Bold);
+    QFont font("Meiryo UI",0, QFont::Helvetica);
     font.setPointSizeF(0.08*r);
 
     painter->setFont(font);

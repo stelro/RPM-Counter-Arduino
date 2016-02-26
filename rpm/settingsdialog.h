@@ -17,17 +17,12 @@ public:
     explicit SettingsDialog(QWidget *parent = 0);
     ~SettingsDialog();
 private slots:
-    void on_pushButton_2_clicked();
+    void sendDataRpm();
 private:
     Ui::SettingsDialog *ui;
-    ArduinoRpm rpmForm;
+    ArduinoRpm *rpmForm;
 
     QList<QSerialPortInfo> serialPorts;
-    QList<QString> buadRatesList;
-    QList<QString> dataBitsList;
-    QList<QString> parityList;
-    QList<QString> stopBitsList;
-    QList<QString> flowControllList;
 
 };
 
