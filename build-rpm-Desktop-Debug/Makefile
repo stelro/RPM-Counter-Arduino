@@ -340,7 +340,9 @@ moc_arduinorpm.cpp: ../rpm/qcgaugewidget.h \
 		../rpm/arduinorpm.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/stel/arduino/rpm -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../rpm/arduinorpm.h -o moc_arduinorpm.cpp
 
-moc_settingsdialog.cpp: ../rpm/settingsdialog.h
+moc_settingsdialog.cpp: ../rpm/arduinorpm.h \
+		../rpm/qcgaugewidget.h \
+		../rpm/settingsdialog.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/stel/arduino/rpm -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../rpm/settingsdialog.h -o moc_settingsdialog.cpp
 
 moc_qcgaugewidget.cpp: ../rpm/qcgaugewidget.h
@@ -368,7 +370,8 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 main.o: ../rpm/main.cpp ../rpm/arduinorpm.h \
-		../rpm/qcgaugewidget.h
+		../rpm/qcgaugewidget.h \
+		../rpm/settingsdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../rpm/main.cpp
 
 arduinorpm.o: ../rpm/arduinorpm.cpp ../rpm/arduinorpm.h \
@@ -378,6 +381,8 @@ arduinorpm.o: ../rpm/arduinorpm.cpp ../rpm/arduinorpm.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arduinorpm.o ../rpm/arduinorpm.cpp
 
 settingsdialog.o: ../rpm/settingsdialog.cpp ../rpm/settingsdialog.h \
+		../rpm/arduinorpm.h \
+		../rpm/qcgaugewidget.h \
 		ui_settingsdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settingsdialog.o ../rpm/settingsdialog.cpp
 

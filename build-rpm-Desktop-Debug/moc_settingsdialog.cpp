@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_SettingsDialog_t {
-    QByteArrayData data[4];
-    char stringdata[43];
+    QByteArrayData data[3];
+    char stringdata[40];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,13 +30,12 @@ struct qt_meta_stringdata_SettingsDialog_t {
 static const qt_meta_stringdata_SettingsDialog_t qt_meta_stringdata_SettingsDialog = {
     {
 QT_MOC_LITERAL(0, 0, 14), // "SettingsDialog"
-QT_MOC_LITERAL(1, 15, 21), // "on_comboBox_activated"
-QT_MOC_LITERAL(2, 37, 0), // ""
-QT_MOC_LITERAL(3, 38, 4) // "arg1"
+QT_MOC_LITERAL(1, 15, 23), // "on_pushButton_2_clicked"
+QT_MOC_LITERAL(2, 39, 0) // ""
 
     },
-    "SettingsDialog\0on_comboBox_activated\0"
-    "\0arg1"
+    "SettingsDialog\0on_pushButton_2_clicked\0"
+    ""
 };
 #undef QT_MOC_LITERAL
 
@@ -54,10 +53,10 @@ static const uint qt_meta_data_SettingsDialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   19,    2, 0x08 /* Private */,
+       1,    0,   19,    2, 0x08 /* Private */,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -67,10 +66,11 @@ void SettingsDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     if (_c == QMetaObject::InvokeMetaMethod) {
         SettingsDialog *_t = static_cast<SettingsDialog *>(_o);
         switch (_id) {
-        case 0: _t->on_comboBox_activated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 0: _t->on_pushButton_2_clicked(); break;
         default: ;
         }
     }
+    Q_UNUSED(_a);
 }
 
 const QMetaObject SettingsDialog::staticMetaObject = {

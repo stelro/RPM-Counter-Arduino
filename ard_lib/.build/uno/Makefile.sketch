@@ -1,0 +1,14 @@
+
+
+
+
+
+.build/uno/src/sketch_rpm.cpp : src/sketch_rpm.ino
+	@mkdir -p .build/uno/src
+	@echo src/sketch_rpm.ino
+	@/usr/local/bin/ino preproc  -o $@ $^
+
+
+all : .build/uno/src/sketch_rpm.cpp
+	@true
+

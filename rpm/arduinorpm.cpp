@@ -47,7 +47,14 @@ ArduinoRpm::ArduinoRpm(QWidget *parent) :
     connect(ui->pushButton,SIGNAL(clicked(bool)), this,SLOT(close()));
 
 
+
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+
+    ui->label_2->setText(baudRateValue);
+
+    connect(ui->horizontalSlider,SIGNAL(valueChanged(int)),
+            ui->lcdNumber,SLOT(display(int)));
+
 
 
 }
@@ -66,13 +73,12 @@ void ArduinoRpm::serialReciver()
 
     ui->lcdNumber->display(input);
     rpmNeedle->setCurrentValue(input.toInt() / 10);
-
 }
 
 void ArduinoRpm::SerialInitializer()
 {
     serial = new QSerialPort(this);
-    serial->setPortName("/dev/ttyUSB0"); //COM-port your Arduino is connected to
+    serial->setPortName("/dev/ttyACM0"); //COM-port your Arduino is connected to
     serial->open(QIODevice::ReadWrite);
     serial->setBaudRate(QSerialPort::Baud9600); //must be the same as your arduino-baudrate
     serial->setDataBits(QSerialPort::Data8);
@@ -92,6 +98,13 @@ void ArduinoRpm::on_actionSettings_triggered()
     settingsDialog.setModal(true);
     settingsDialog.exec();
 }
+
+void ArduinoRpm::getBaudRate(const QString& baudRate)
+{
+    emit valueChanged(baudRate);
+    baudRateValue = baudRate;
+}
+
 
 
 

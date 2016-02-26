@@ -20,6 +20,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
@@ -38,6 +39,8 @@ public:
     QLabel *label;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
+    QLabel *label_2;
+    QSlider *horizontalSlider;
     QMenuBar *menuBar;
     QMenu *menuSettings;
     QToolBar *mainToolBar;
@@ -47,7 +50,7 @@ public:
     {
         if (ArduinoRpm->objectName().isEmpty())
             ArduinoRpm->setObjectName(QStringLiteral("ArduinoRpm"));
-        ArduinoRpm->resize(719, 523);
+        ArduinoRpm->resize(719, 553);
         actionSettings = new QAction(ArduinoRpm);
         actionSettings->setObjectName(QStringLiteral("actionSettings"));
         actionExit = new QAction(ArduinoRpm);
@@ -80,6 +83,13 @@ public:
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(30, 150, 111, 17));
+        horizontalSlider = new QSlider(centralWidget);
+        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
+        horizontalSlider->setGeometry(QRect(150, 450, 471, 18));
+        horizontalSlider->setOrientation(Qt::Horizontal);
         ArduinoRpm->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ArduinoRpm);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -113,6 +123,7 @@ public:
         actionExit->setText(QApplication::translate("ArduinoRpm", "Exit", 0));
         pushButton->setText(QApplication::translate("ArduinoRpm", "Exit", 0));
         label->setText(QApplication::translate("ArduinoRpm", "RPM :", 0));
+        label_2->setText(QApplication::translate("ArduinoRpm", "TextLabel", 0));
         menuSettings->setTitle(QApplication::translate("ArduinoRpm", "HOME", 0));
     } // retranslateUi
 

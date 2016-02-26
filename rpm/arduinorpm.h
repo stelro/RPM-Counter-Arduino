@@ -26,6 +26,9 @@ public:
     void SerialInitializer();
 public slots:
     void serialReciver();
+    void getBaudRate(const QString&);
+signals:
+    void valueChanged(const QString &newValue);
 private slots:
     void on_actionExit_triggered();
     void on_actionSettings_triggered();
@@ -40,6 +43,14 @@ private:
 
     QcGaugeWidget *rpmGuage;
     QcNeedleItem *rpmNeedle;
+
+    //variables to hold settings values
+    QString serialPortValue;
+    QString baudRateValue;
+    QString dataBitsValue;
+    QString parityValue;
+    QString stopBitsValue;
+    QString flowControllValue;
 
 
 };
