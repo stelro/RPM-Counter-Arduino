@@ -29,7 +29,7 @@ void loop() {
   Serial.println(sensorvalue);
   delay(delayValue); 
 
-	LedsMagic(sensorvalue);
+	////LedsMagic(sensorvalue);
 }
 
 void LedsMagic(int value) {
