@@ -9,6 +9,8 @@
 #include <QVBoxLayout>
 #include <QSlider>
 #include <QtWidgets>
+#include <fstream>
+
 #include "qcgaugewidget.h"
 
 namespace Ui {
@@ -45,6 +47,7 @@ private:
     //status bar message
     QString statusMessage;
 
+    std::ofstream input_file;
 };
 
 #endif // ARDUINORPM_H

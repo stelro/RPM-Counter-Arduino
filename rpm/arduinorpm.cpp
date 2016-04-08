@@ -8,6 +8,7 @@ ArduinoRpm::ArduinoRpm(QWidget *parent,QString passed_serial) :
 {
     SerialInitializer();
 
+    input_file.open("input.txt");
 
     ui->setupUi(this);
     rpmGuage = new QcGaugeWidget;
@@ -42,6 +43,7 @@ ArduinoRpm::ArduinoRpm(QWidget *parent,QString passed_serial) :
     ui->verticalLayout->addWidget(rpmGuage);
 
 
+
     connect(serial,SIGNAL(readyRead()), this, SLOT(serialReciver()));
     connect(ui->pushButton,SIGNAL(clicked(bool)), this,SLOT(close()));
 
@@ -62,12 +64,28 @@ ArduinoRpm::~ArduinoRpm()
 
 void ArduinoRpm::serialReciver()
 {
-    QByteArray byteArray;
-    byteArray = serial->readAll();
-    QString input = QString(byteArray);
 
-    ui->lcdNumber->display(input);
-    rpmNeedle->setCurrentValue(input.toInt()*10);
+    std::string input_converter;
+
+
+    int c = 0;
+    char * dataBuffer;
+    int size = serial->bytesAvailable();
+
+    dataBuffer = new char[size + 1];
+    c = serial->readLine(dataBuffer, size);
+    dataBuffer[c] = '\0';
+
+
+    input_converter = dataBuffer;
+    QString omg = input_converter;
+
+    //ui->lcdNumber->display(input_converter);
+    //rpmNeedle->setCurrentValue(input_converter.toInt());
+    input_file << input_converter;
+
+    delete dataBuffer;
+
 }
 
 void ArduinoRpm::SerialInitializer()
