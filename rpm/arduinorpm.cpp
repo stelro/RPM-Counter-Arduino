@@ -8,7 +8,14 @@ ArduinoRpm::ArduinoRpm(QWidget *parent,QString passed_serial) :
 {
     SerialInitializer();
 
-    input_file.open("input.txt");
+
+    date = QDate::currentDate();
+    QString time = QTime::currentTime().toString("_hh_mm");
+
+    QString dt = date.toString("dd_MM_yyyy") + time  + ".log";
+    QByteArray ba = dt.toLatin1();
+    const char *ma = ba.data();
+    input_file.open(ma);
 
     ui->setupUi(this);
     rpmGuage = new QcGaugeWidget;
@@ -74,7 +81,7 @@ void ArduinoRpm::serialReciver()
     int size = serial->bytesAvailable();
 
     dataBuffer = new char[size + 1];
-    QThread::msleep(100); //100 microseconds delay
+    QThread::msleep(1000); //100 microseconds delay
     serial->flush();
     c = serial->readLine(dataBuffer, size);
     dataBuffer[c] = '\0';

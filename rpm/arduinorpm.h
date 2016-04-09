@@ -48,6 +48,7 @@ private:
     QString statusMessage;
 
     std::ofstream input_file;
+    QDate date;
 };
 
 #endif // ARDUINORPM_H
