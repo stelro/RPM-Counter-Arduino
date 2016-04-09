@@ -65,24 +65,27 @@ ArduinoRpm::~ArduinoRpm()
 void ArduinoRpm::serialReciver()
 {
 
-    std::string input_converter;
+    QString input_converter;
 
+    std::string to_file_string;
 
     int c = 0;
-    char * dataBuffer;
+    char *dataBuffer;
     int size = serial->bytesAvailable();
 
     dataBuffer = new char[size + 1];
+    QThread::msleep(100); //100 microseconds delay
+    serial->flush();
     c = serial->readLine(dataBuffer, size);
     dataBuffer[c] = '\0';
 
 
-    input_converter = dataBuffer;
-    QString omg = input_converter;
+    to_file_string = dataBuffer;
+    input_converter = QString::fromStdString(to_file_string);
 
-    //ui->lcdNumber->display(input_converter);
-    //rpmNeedle->setCurrentValue(input_converter.toInt());
-    input_file << input_converter;
+    ui->lcdNumber->display(input_converter);
+    rpmNeedle->setCurrentValue(input_converter.toInt());
+    input_file << to_file_string;
 
     delete dataBuffer;
 
