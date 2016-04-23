@@ -1,3 +1,28 @@
+/*
+ *  arduinorpm.cpp - Main class , used to manage the serial input
+ *  with all it's settings and connections, also render the main
+ *  speedometer with the specified parameters.
+ *
+ *  This file is a part of RPM Counter
+ *  Copyright (C) 2016 KASTORIA Robotics Team
+ *  Main Author, Stelmach Rostislav, stelmach.ro<at>gmail.com
+ *  Main Contributors, Michail Alexandros Savvanis, michalsavv<at>gmail.com
+ *  and Perlat Kociaj, perlatkotsiai<at>outlook.com
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "arduinorpm.h"
 #include "ui_arduinorpm.h"
 #include "settingsdialog.h"
@@ -14,8 +39,8 @@ ArduinoRpm::ArduinoRpm(QWidget *parent,QString passed_serial) :
 
     QString dt = date.toString("dd_MM_yyyy") + time  + ".log";
     QByteArray ba = dt.toLatin1();
-    const char *ma = ba.data();
-    input_file.open(ma);
+    const char *file_name = ba.data();
+    input_file.open(file_name);
 
     ui->setupUi(this);
     rpmGuage = new QcGaugeWidget;
@@ -73,26 +98,25 @@ void ArduinoRpm::serialReciver()
 {
 
     QString input_converter;
-
     std::string to_file_string;
 
-    int c = 0;
+    int sizeFromInput = 0;
     char *dataBuffer;
-    int size = serial->bytesAvailable();
+    int bufferSize = serial->bytesAvailable();
 
-    dataBuffer = new char[size + 1];
-    QThread::msleep(1000); //100 microseconds delay
+    dataBuffer = new char[bufferSize + 1];
     serial->flush();
-    c = serial->readLine(dataBuffer, size);
-    dataBuffer[c] = '\0';
+    sizeFromInput = serial->readLine(dataBuffer, size);
 
 
     to_file_string = dataBuffer;
     input_converter = QString::fromStdString(to_file_string);
 
-    ui->lcdNumber->display(input_converter);
-    rpmNeedle->setCurrentValue(input_converter.toInt());
-    input_file << to_file_string;
+    if ((sizeFromInput >= 5) && (input_converter.toInt() <= 9999)) {
+        ui->lcdNumber->display(input_converter);
+        rpmNeedle->setCurrentValue(input_converter.toInt());
+        input_file << to_file_string;
+    }
 
     delete dataBuffer;
 
@@ -110,16 +134,6 @@ void ArduinoRpm::SerialInitializer()
     serial->setFlowControl(QSerialPort::NoFlowControl);
 }
 
-void ArduinoRpm::on_actionExit_triggered()
-{
 
-}
-
-void ArduinoRpm::on_actionSettings_triggered()
-{
-    SettingsDialog settingsDialog;
-    settingsDialog.setModal(true);
-    settingsDialog.exec();
-}
 
 
