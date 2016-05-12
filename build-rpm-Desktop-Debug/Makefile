@@ -50,17 +50,17 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../rpm/main.cpp \
 		../rpm/arduinorpm.cpp \
-		../rpm/settingsdialog.cpp \
-		../rpm/qcgaugewidget.cpp moc_arduinorpm.cpp \
-		moc_settingsdialog.cpp \
-		moc_qcgaugewidget.cpp
+		../rpm/qcgaugewidget.cpp \
+		../rpm/splashdialog.cpp moc_arduinorpm.cpp \
+		moc_qcgaugewidget.cpp \
+		moc_splashdialog.cpp
 OBJECTS       = main.o \
 		arduinorpm.o \
-		settingsdialog.o \
 		qcgaugewidget.o \
+		splashdialog.o \
 		moc_arduinorpm.o \
-		moc_settingsdialog.o \
-		moc_qcgaugewidget.o
+		moc_qcgaugewidget.o \
+		moc_splashdialog.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -120,11 +120,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../rpm/rpm.pro ../rpm/arduinorpm.h \
-		../rpm/settingsdialog.h \
-		../rpm/qcgaugewidget.h ../rpm/main.cpp \
+		../rpm/qcgaugewidget.h \
+		../rpm/splashdialog.h ../rpm/main.cpp \
 		../rpm/arduinorpm.cpp \
-		../rpm/settingsdialog.cpp \
-		../rpm/qcgaugewidget.cpp
+		../rpm/qcgaugewidget.cpp \
+		../rpm/splashdialog.cpp
 QMAKE_TARGET  = rpm
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = rpm
@@ -152,7 +152,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_arduinorpm.h ui_settingsdialog.h $(OBJECTS)  
+$(TARGET): ui_arduinorpm.h ui_splashdialog.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../rpm/rpm.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -296,9 +296,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../rpm/arduinorpm.h ../rpm/settingsdialog.h ../rpm/qcgaugewidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../rpm/main.cpp ../rpm/arduinorpm.cpp ../rpm/settingsdialog.cpp ../rpm/qcgaugewidget.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../rpm/arduinorpm.ui ../rpm/settingsdialog.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../rpm/arduinorpm.h ../rpm/qcgaugewidget.h ../rpm/splashdialog.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../rpm/main.cpp ../rpm/arduinorpm.cpp ../rpm/qcgaugewidget.cpp ../rpm/splashdialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../rpm/arduinorpm.ui ../rpm/splashdialog.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -321,31 +321,31 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_arduinorpm.cpp moc_settingsdialog.cpp moc_qcgaugewidget.cpp
+compiler_moc_header_make_all: moc_arduinorpm.cpp moc_qcgaugewidget.cpp moc_splashdialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_arduinorpm.cpp moc_settingsdialog.cpp moc_qcgaugewidget.cpp
+	-$(DEL_FILE) moc_arduinorpm.cpp moc_qcgaugewidget.cpp moc_splashdialog.cpp
 moc_arduinorpm.cpp: ../rpm/qcgaugewidget.h \
 		../rpm/arduinorpm.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/stel/workspace/RPM-Arduino-Sample/rpm -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../rpm/arduinorpm.h -o moc_arduinorpm.cpp
 
-moc_settingsdialog.cpp: ../rpm/arduinorpm.h \
-		../rpm/qcgaugewidget.h \
-		../rpm/settingsdialog.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/stel/workspace/RPM-Arduino-Sample/rpm -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../rpm/settingsdialog.h -o moc_settingsdialog.cpp
-
 moc_qcgaugewidget.cpp: ../rpm/qcgaugewidget.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/stel/workspace/RPM-Arduino-Sample/rpm -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../rpm/qcgaugewidget.h -o moc_qcgaugewidget.cpp
 
+moc_splashdialog.cpp: ../rpm/arduinorpm.h \
+		../rpm/qcgaugewidget.h \
+		../rpm/splashdialog.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/stel/workspace/RPM-Arduino-Sample/rpm -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSerialPort -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../rpm/splashdialog.h -o moc_splashdialog.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_arduinorpm.h ui_settingsdialog.h
+compiler_uic_make_all: ui_arduinorpm.h ui_splashdialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_arduinorpm.h ui_settingsdialog.h
+	-$(DEL_FILE) ui_arduinorpm.h ui_splashdialog.h
 ui_arduinorpm.h: ../rpm/arduinorpm.ui
 	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../rpm/arduinorpm.ui -o ui_arduinorpm.h
 
-ui_settingsdialog.h: ../rpm/settingsdialog.ui
-	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../rpm/settingsdialog.ui -o ui_settingsdialog.h
+ui_splashdialog.h: ../rpm/splashdialog.ui
+	/usr/lib/x86_64-linux-gnu/qt5/bin/uic ../rpm/splashdialog.ui -o ui_splashdialog.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -359,32 +359,32 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 main.o: ../rpm/main.cpp ../rpm/arduinorpm.h \
 		../rpm/qcgaugewidget.h \
-		../rpm/settingsdialog.h
+		../rpm/splashdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../rpm/main.cpp
 
 arduinorpm.o: ../rpm/arduinorpm.cpp ../rpm/arduinorpm.h \
 		../rpm/qcgaugewidget.h \
 		ui_arduinorpm.h \
-		../rpm/settingsdialog.h
+		../rpm/splashdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arduinorpm.o ../rpm/arduinorpm.cpp
-
-settingsdialog.o: ../rpm/settingsdialog.cpp ../rpm/settingsdialog.h \
-		../rpm/arduinorpm.h \
-		../rpm/qcgaugewidget.h \
-		ui_settingsdialog.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settingsdialog.o ../rpm/settingsdialog.cpp
 
 qcgaugewidget.o: ../rpm/qcgaugewidget.cpp ../rpm/qcgaugewidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qcgaugewidget.o ../rpm/qcgaugewidget.cpp
 
+splashdialog.o: ../rpm/splashdialog.cpp ../rpm/splashdialog.h \
+		../rpm/arduinorpm.h \
+		../rpm/qcgaugewidget.h \
+		ui_splashdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o splashdialog.o ../rpm/splashdialog.cpp
+
 moc_arduinorpm.o: moc_arduinorpm.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_arduinorpm.o moc_arduinorpm.cpp
 
-moc_settingsdialog.o: moc_settingsdialog.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_settingsdialog.o moc_settingsdialog.cpp
-
 moc_qcgaugewidget.o: moc_qcgaugewidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcgaugewidget.o moc_qcgaugewidget.cpp
+
+moc_splashdialog.o: moc_splashdialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_splashdialog.o moc_splashdialog.cpp
 
 ####### Install
 

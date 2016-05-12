@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsDialog</class>
+ <widget class="QDialog" name="SettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>387</width>
+    <height>115</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RPM Counter</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Speed-48.png</normaloff>Speed-48.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#SettingsDialog {
+	background: #f5f4f4
+}
+
+#connectButton {
+   background: #55ff55;
+  background-image: -webkit-linear-gradient(top, #55ff55, #84f084);
+  background-image: -moz-linear-gradient(top, #55ff55, #84f084);
+  background-image: -ms-linear-gradient(top, #55ff55, #84f084);
+  background-image: -o-linear-gradient(top, #55ff55, #84f084);
+  background-image: linear-gradient(to bottom, #55ff55, #84f084);
+  border-radius: 6px;
+  font-family: Georgia;
+  color: #4d4b4d;
+  font-size: 16px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+#connectButton:hover:!pressed {
+ background: #03e803;
+  background-image: -webkit-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: -moz-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: -ms-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: -o-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: linear-gradient(to bottom, #03e803, #0fdb0f);
+  text-decoration: none;
+}
+
+#pushButton {
+ background: #55ff55;
+  background-image: -webkit-linear-gradient(top, #55ff55, #84f084);
+  background-image: -moz-linear-gradient(top, #55ff55, #84f084);
+  background-image: -ms-linear-gradient(top, #55ff55, #84f084);
+  background-image: -o-linear-gradient(top, #55ff55, #84f084);
+  background-image: linear-gradient(to bottom, #55ff55, #84f084);
+  border-radius: 6px;
+  font-family: Georgia;
+  color: #4d4b4d;
+  font-size: 16px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+#pushButton:hover:!pressed {
+  background: #03e803;
+  background-image: -webkit-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: -moz-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: -ms-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: -o-linear-gradient(top, #03e803, #0fdb0f);
+  background-image: linear-gradient(to bottom, #03e803, #0fdb0f);
+  text-decoration: none;
+}</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>351</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Serial Port:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="serialPortCombo"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>351</width>
+     <height>46</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="connectButton">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Connect</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="pushButton">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

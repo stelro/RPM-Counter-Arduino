@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
@@ -29,25 +30,33 @@ QT_BEGIN_NAMESPACE
 class Ui_ArduinoRpm
 {
 public:
+    QAction *actionExit;
+    QAction *actionLCD_Output;
     QWidget *centralWidget;
-    QLCDNumber *lcdNumber;
     QPushButton *pushButton;
-    QLabel *label;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
+    QFrame *frame;
+    QLCDNumber *lcdNumber;
+    QLabel *label;
     QMenuBar *menuBar;
     QMenu *menuSettings;
+    QMenu *menuShow;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *ArduinoRpm)
     {
         if (ArduinoRpm->objectName().isEmpty())
             ArduinoRpm->setObjectName(QStringLiteral("ArduinoRpm"));
+        ArduinoRpm->setWindowModality(Qt::NonModal);
         ArduinoRpm->resize(582, 605);
         QFont font;
         font.setBold(true);
         font.setWeight(75);
         ArduinoRpm->setFont(font);
+        QIcon icon;
+        icon.addFile(QStringLiteral("Speed-48.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ArduinoRpm->setWindowIcon(icon);
         ArduinoRpm->setStyleSheet(QLatin1String("#ArduinoRpm {\n"
 "	background: #f5f4f4;\n"
 "}\n"
@@ -81,15 +90,15 @@ public:
 "background: #373b41;\n"
 "color: #ffffff;\n"
 "}"));
+        actionExit = new QAction(ArduinoRpm);
+        actionExit->setObjectName(QStringLiteral("actionExit"));
+        actionLCD_Output = new QAction(ArduinoRpm);
+        actionLCD_Output->setObjectName(QStringLiteral("actionLCD_Output"));
+        actionLCD_Output->setCheckable(true);
+        actionLCD_Output->setChecked(true);
+        actionLCD_Output->setEnabled(true);
         centralWidget = new QWidget(ArduinoRpm);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        lcdNumber = new QLCDNumber(centralWidget);
-        lcdNumber->setObjectName(QStringLiteral("lcdNumber"));
-        lcdNumber->setGeometry(QRect(100, 490, 151, 41));
-        lcdNumber->setSmallDecimalPoint(false);
-        lcdNumber->setDigitCount(8);
-        lcdNumber->setMode(QLCDNumber::Dec);
-        lcdNumber->setSegmentStyle(QLCDNumber::Flat);
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(400, 490, 151, 41));
@@ -98,14 +107,6 @@ public:
         font1.setUnderline(false);
         font1.setStrikeOut(false);
         pushButton->setFont(font1);
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(30, 490, 57, 24));
-        QFont font2;
-        font2.setPointSize(16);
-        font2.setBold(true);
-        font2.setWeight(75);
-        label->setFont(font2);
         verticalLayoutWidget = new QWidget(centralWidget);
         verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
         verticalLayoutWidget->setGeometry(QRect(20, 40, 531, 441));
@@ -114,12 +115,34 @@ public:
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
+        frame = new QFrame(centralWidget);
+        frame->setObjectName(QStringLiteral("frame"));
+        frame->setGeometry(QRect(20, 490, 241, 41));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        lcdNumber = new QLCDNumber(frame);
+        lcdNumber->setObjectName(QStringLiteral("lcdNumber"));
+        lcdNumber->setGeometry(QRect(80, 0, 151, 41));
+        lcdNumber->setSmallDecimalPoint(false);
+        lcdNumber->setDigitCount(8);
+        lcdNumber->setMode(QLCDNumber::Dec);
+        lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+        label = new QLabel(frame);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(10, 10, 71, 24));
+        QFont font2;
+        font2.setPointSize(16);
+        font2.setBold(true);
+        font2.setWeight(75);
+        label->setFont(font2);
         ArduinoRpm->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ArduinoRpm);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 582, 23));
+        menuBar->setGeometry(QRect(0, 0, 582, 21));
         menuSettings = new QMenu(menuBar);
         menuSettings->setObjectName(QStringLiteral("menuSettings"));
+        menuShow = new QMenu(menuBar);
+        menuShow->setObjectName(QStringLiteral("menuShow"));
         ArduinoRpm->setMenuBar(menuBar);
         statusBar = new QStatusBar(ArduinoRpm);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -131,8 +154,11 @@ public:
         ArduinoRpm->setStatusBar(statusBar);
 
         menuBar->addAction(menuSettings->menuAction());
+        menuBar->addAction(menuShow->menuAction());
         menuSettings->addSeparator();
         menuSettings->addSeparator();
+        menuSettings->addAction(actionExit);
+        menuShow->addAction(actionLCD_Output);
 
         retranslateUi(ArduinoRpm);
 
@@ -141,10 +167,13 @@ public:
 
     void retranslateUi(QMainWindow *ArduinoRpm)
     {
-        ArduinoRpm->setWindowTitle(QApplication::translate("ArduinoRpm", "ArduinoRpm", 0));
+        ArduinoRpm->setWindowTitle(QApplication::translate("ArduinoRpm", "RPM Counter", 0));
+        actionExit->setText(QApplication::translate("ArduinoRpm", "Exit", 0));
+        actionLCD_Output->setText(QApplication::translate("ArduinoRpm", "LCD Output", 0));
         pushButton->setText(QApplication::translate("ArduinoRpm", "Exit", 0));
         label->setText(QApplication::translate("ArduinoRpm", "RPM :", 0));
-        menuSettings->setTitle(QApplication::translate("ArduinoRpm", "HOME", 0));
+        menuSettings->setTitle(QApplication::translate("ArduinoRpm", "Home", 0));
+        menuShow->setTitle(QApplication::translate("ArduinoRpm", "Show", 0));
     } // retranslateUi
 
 };

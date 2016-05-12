@@ -1,5 +1,5 @@
 #include "arduinorpm.h"
-#include "settingsdialog.h"
+#include "splashdialog.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

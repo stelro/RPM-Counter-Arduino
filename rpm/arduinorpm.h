@@ -27,6 +27,7 @@ public:
 public slots:
     void serialReciver();
     void SerialInitializer();
+    void showFrame();
 private:
 
     //The main User Interface
@@ -50,6 +51,9 @@ private:
 
     std::ofstream input_file;
     QDate date;
+    QString time;
+
+    void drawGauge();
 };
 
 #endif // ARDUINORPM_H

@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'settingsdialog.ui'
+** Form generated from reading UI file 'splashdialog.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.5.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_SETTINGSDIALOG_H
-#define UI_SETTINGSDIALOG_H
+#ifndef UI_SPLASHDIALOG_H
+#define UI_SPLASHDIALOG_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -40,6 +40,9 @@ public:
         if (SettingsDialog->objectName().isEmpty())
             SettingsDialog->setObjectName(QStringLiteral("SettingsDialog"));
         SettingsDialog->resize(387, 115);
+        QIcon icon;
+        icon.addFile(QStringLiteral("Speed-48.png"), QSize(), QIcon::Normal, QIcon::Off);
+        SettingsDialog->setWindowIcon(icon);
         SettingsDialog->setStyleSheet(QLatin1String("#SettingsDialog {\n"
 "	background: #f5f4f4\n"
 "}\n"
@@ -156,4 +159,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_SETTINGSDIALOG_H
+#endif // UI_SPLASHDIALOG_H

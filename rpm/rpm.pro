@@ -16,13 +16,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         arduinorpm.cpp \
-    settingsdialog.cpp \
-    qcgaugewidget.cpp
+    qcgaugewidget.cpp \
+    splashdialog.cpp
 
 HEADERS  += arduinorpm.h \
-    settingsdialog.h \
-    qcgaugewidget.h
+    qcgaugewidget.h \
+    splashdialog.h
 
 FORMS    += arduinorpm.ui \
-    settingsdialog.ui
+    splashdialog.ui
 
